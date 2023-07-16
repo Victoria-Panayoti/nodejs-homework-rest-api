@@ -5,6 +5,7 @@ const { User } = require("../models/users");
 const { HttpError, ctrlWrapper } = require("../helpers");
 
 const { SECRET_KEY } = process.env;
+
 const register = async (req, res) => {
   const { email,password } = req.body;
   const user = await User.findOne({ email });
@@ -17,6 +18,7 @@ const register = async (req, res) => {
     email: newUser.email,
   });
 };
+
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -28,14 +30,32 @@ const login = async (req, res) => {
     throw new HttpError(401, "Email or password invalid");
   }
   const payload = {
-    id:user._id,
+    id: user._id,
   }
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  await User.findByIdAndUpdate(user._id, { token });
   res.json({
     token,
   })
+};
+
+const getCurrent = async (req, res) => {
+  const { email, subscription } = req.user;
+  res.json({
+    email,
+    subscription,
+  });
+};
+
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id,{ token: "" });
+  res.json({ message: "Logout success" });
 }
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  getCurrent: ctrlWrapper(getCurrent),
+  logout:ctrlWrapper(logout),
 };
