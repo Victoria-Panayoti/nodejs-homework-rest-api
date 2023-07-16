@@ -5,8 +5,9 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 
-const notFoundHandler = require("./middlewares/notFoundHandler");
+const {notFoundHandler} = require("./middlewares");
 
+const authRouter = require("./routes/api/auth")
 const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
@@ -24,13 +25,14 @@ app.use(async (req, res, next) => {
   next();
 });
 
+app.use("/api/users", authRouter)
 app.use("/api/contacts", contactsRouter);
 
 app.use(notFoundHandler);
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Server error" } = err;
-  res.status(status).json({ message });
+  const { statusCode = 500, message = "Server error" } = err;
+  res.status(statusCode).json({ message });
 });
 
 module.exports = app;
