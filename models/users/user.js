@@ -1,9 +1,8 @@
 const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../../helpers");
 
-
 const emailRegexp = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
-const subscriptions =["starter", "pro", "business"]
+const subscriptions = ["starter", "pro", "business"];
 const userSchema = new Schema(
   {
     password: {
@@ -13,7 +12,7 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      match:emailRegexp,
+      match: emailRegexp,
       required: [true, "Email is required"],
       unique: true,
     },
@@ -25,6 +24,10 @@ const userSchema = new Schema(
     token: {
       type: String,
       default: "",
+    },
+    avatarURL: {
+      type: String,
+      required: true,
     },
   },
   {

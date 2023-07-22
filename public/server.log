@@ -197,3 +197,12 @@ GET /api/users/logout 16-07-2023_08:36:08
 POST /api/users/logout 16-07-2023_08:37:24
 POST /api/users/login 16-07-2023_08:37:35
 POST /api/users/logout 16-07-2023_08:38:12
+POST /api/users/register 20-07-2023_06:28:18
+POST /api/users/register 20-07-2023_06:38:08
+POST /api/users/register 20-07-2023_06:38:54
+POST /api/users/register 20-07-2023_06:39:01
+POST /api/users/login 20-07-2023_06:48:41
+PATCH /api/users/avatars 21-07-2023_05:47:09
+PATCH /api/users/avatars 21-07-2023_05:53:34
+POST /api/users/login 21-07-2023_05:55:49
+PATCH /api/users/avatars 21-07-2023_05:56:19
